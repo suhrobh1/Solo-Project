@@ -6,14 +6,14 @@ import Register from '../components/Register';
 const LogReg =(props) =>{
 
     
-    
+    const {user, setUser} = props;
 
 
 
     return(
 
         <div>
-            <Login/>
+            <Login user = {user} setUser = {setUser}/>
             <Register/>
         </div>
     )

@@ -7,7 +7,7 @@ import Header from './Header';
 const AddNewVehicle = (props) =>{
 
 
-    const {loggedIn} = props;
+    const {loggedIn, setLoggedIn, user,  setUser} = props;
     const [errors, setError] = useState({})
 
     const [newVehicle, setNewVehicle] = useState({
@@ -27,7 +27,7 @@ const AddNewVehicle = (props) =>{
         .then((res)=>{
             console.log(res);
             console.log(res.data);
-            navigate("/home");
+            navigate("/");
         })
         .catch((err)=>{
             console.log(err);
@@ -43,7 +43,10 @@ const AddNewVehicle = (props) =>{
             <Header
                 link={"/"}
                 linkText={"Return Home"}
-                titleText={"Add a Vehicle!"}
+                titleText={"Rent My Car"}
+                setUser = {setUser} user = {user}
+                loggedIn = {loggedIn}
+                setLoggedIn = {setLoggedIn}
             />
             {
                 loggedIn? 
@@ -56,7 +59,7 @@ const AddNewVehicle = (props) =>{
                         />
                 :
                 <div>
-                    <h3>Please log in to add a vehicle!</h3>
+                    <h3 class="m-8 text-xl">Please log in to add a vehicle!</h3>
                 </div>  
             }
             

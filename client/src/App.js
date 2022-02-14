@@ -7,21 +7,24 @@ import DisplayOneVehicle from './components/DisplayOneVehicle';
 import AddNewVehicle from './components/AddNewVehicle';
 import UpdateVehicle from './components/UpdateVehicle';
 import { useState } from 'react';
+import RentPage from './components/RentPage';
 
 
 function App() {
 
   const[loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState({});
 
   return (
     <div className="App">
       <Router>
-        <LogReg path = "/"/>
-        <DisplayAllVehicles path="/home" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} />
-        <AddNewVehicle path="/new" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn}/>
-        <DisplayOneVehicle path="/vehicle/:id" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn}/>
-        <UpdateVehicle path="/vehicle/edit/:id" />
-        <Profile path="/user/profile/:username" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn}/>
+        <LogReg path = "/logReg" user = {user} setUser = {setUser}/>
+        <DisplayAllVehicles path="/" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} user = {user} setUser = {setUser}/>
+        <AddNewVehicle path="/new" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user}/>
+        <DisplayOneVehicle path="/vehicle/:id" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} user = {user} setUser = {setUser}/>
+        <UpdateVehicle path="/vehicle/edit/:id" setUser = {setUser} user = {user}/>
+        <Profile path="/user/profile/:username" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn}user = {user} setUser = {setUser}/>
+        <RentPage path ="/vehicle/rent/:id" loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} user = {user} setUser = {setUser}/>
       </Router>
     </div>
   );

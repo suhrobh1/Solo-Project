@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Link, navigate} from '@reach/router';
 import Header from './Header';
+import RentPage from './RentPage';
 
 
 
 const DisplayOneVehicle = (props) =>{
-
+    const{user, setUser} = props;
     const {id, loggedIn, setLoggedIn} = props;
     const [vehicle, setVehicle] = useState({})
+    const [vehicleSpecs, setVehicleSpecs] = useState([]);
 
     useEffect(()=>{
         //This id is very important. We were able to send it from AllVehicles to here 
@@ -28,6 +30,22 @@ const DisplayOneVehicle = (props) =>{
                 console.log(err)
             })
     }, [id])
+    console.log("TESTING:", vehicle.model);
+
+    useEffect(() => {
+        axios.get(`https://www.fueleconomy.gov/ws/rest/ympg/shared/vehicles?make=Nissan&model=Altima`)
+            .then((res) => {
+                console.log(res);
+                
+                console.log("Data from API",res.data.vehicle[0]);
+                setVehicleSpecs(res.data.vehicle[0]);
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }, [])
+    
+
 
 
     const deleteVehicle = () =>{
@@ -45,27 +63,35 @@ const DisplayOneVehicle = (props) =>{
     }
 
 
+
+
     return(
         <div style={{textAlign:"center"}}>
-           <Header link={"/new"} linkText={"Add a new vehicle"} titleText={"Rent My Ride"} />
+           <Header link={"/new"} linkText={"Add a new vehicle"} titleText={"Rent My Ride"} loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user}/>
 
             <img src={vehicle.image} alt="vehicle image" 
             style={{width:"150px", height:"150px"}}/>
-            <p>{vehicle.genre}</p>
-            <p>{vehicle.yearReleased}</p>
-            <p>{vehicle.rating}</p>
-            <p>{vehicle.company}</p>
+            <p>{vehicle.make} {vehicle.model}</p>
+            <p>Rental rate: ${vehicle.rate}</p>
+            <p>Data provided by USDE.</p>
+            <p>MPG City: {vehicleSpecs.city08} </p>
+            <p>MPG Highway: {vehicleSpecs.highway08} </p>
+            <p>Transmission: {vehicleSpecs.trany} </p>
+            <p>Fuel Type: {vehicleSpecs.fuelType} </p>
+            <p>Drive Train: {vehicleSpecs.drive} </p>
 
 
-            {
+            {/* {
                 loggedIn?
-                    <button onClick={deleteVehicle}>
-                        Delete {vehicle.title}
-                    </button>
+                    user._id == vehicle.createdBy._id?
+                        <button onClick={deleteVehicle}>
+                            Delete {vehicle.title}
+                        </button>
+                    :null
                 :null
-            }
+            } */}
 
-
+            <button onClick={()=>navigate(`/vehicle/rent/${id}`)}>Rent</button>
             
         </div>
     )

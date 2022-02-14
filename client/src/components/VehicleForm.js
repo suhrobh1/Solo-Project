@@ -21,13 +21,16 @@ const VehicleForm = (props) => {
     }
 
     return (
-        <div>
-            <form onSubmit={submitHandler}>
-
-                <div>
-                    <label>Make</label>
-                    <input value={vehicle.make} name="make" onChange={(e) => onChangeHandler(e)} type="text" />
-
+        <div class="flex-column mx-auto m-10 w-1/3 bg-blue-50 shadow-md rounded">
+            <form class=" px-20 pt-6 pb-8 mb-4" onSubmit={submitHandler}>
+            <h2 class="text-lg mb-10">Add Vehicle</h2>
+                <div class="md:flex md:items-center mb-3">
+                    <div class="md:w-1/3">
+                        <label class="font-bold">Make</label>
+                    </div>
+                    <div class="w-2/3">
+                        <input class=" border rounded w-full py-2 px-2" class=" border rounded w-full py-2 px-2" value={vehicle.make} name="make" onChange={(e) => onChangeHandler(e)} type="text" />
+                    </div>
                     {
                         errors.make ?
                             <span>{errors.make.message}</span>
@@ -35,10 +38,13 @@ const VehicleForm = (props) => {
                     }
                 </div>
 
-                <div>
-                    <label>Model</label>
-                    <input value={vehicle.model} name="model" onChange={(e) => onChangeHandler(e)} type="text" />
-
+                <div class="md:flex md:items-center mb-3">
+                    <div class="md:w-1/3">
+                        <label class="font-bold">Model</label>
+                    </div>
+                    <div class="w-2/3">
+                        <input class=" border rounded w-full py-2 px-2" value={vehicle.model} name="model" onChange={(e) => onChangeHandler(e)} type="text" />
+                    </div>
                     {
                         errors.model ?
                             <span>{errors.model.message}</span>
@@ -46,9 +52,13 @@ const VehicleForm = (props) => {
                     }
                 </div>
 
-                <div>
-                    <label>Make Year</label>
-                    <input value={vehicle.year} name="year" onChange={onChangeHandler} type="number" />
+                <div class="md:flex md:items-center mb-3">
+                    <div class="md:w-1/3">
+                        <label class="font-bold">Make Year</label>
+                    </div>
+                    <div class="w-2/3">
+                        <input class=" border rounded w-full py-2 px-2" value={vehicle.year} name="year" onChange={onChangeHandler} type="number" />
+                    </div>
                     {
                         errors.year?
                             <span>{errors.year.message}</span>
@@ -56,9 +66,13 @@ const VehicleForm = (props) => {
                     }
                 </div>
 
-                <div>
-                    <label>Rate</label>
-                    <input value={vehicle.rate} name="rate" onChange={onChangeHandler} type="number" />
+                <div class="md:flex md:items-center mb-3">
+                    <div class="md:w-1/3">
+                        <label class="font-bold">Daily Rate</label>
+                    </div>
+                    <div class="w-2/3">
+                        <input class=" border rounded w-full py-2 px-2" value={vehicle.rate} name="rate" onChange={onChangeHandler} type="number" />
+                    </div>
                     {
                         errors.rate?
                             <span>{errors.rate.message}</span>
@@ -66,10 +80,13 @@ const VehicleForm = (props) => {
                     }
                 </div>
 
-                <div>
-                    <label>Image</label>
-                    <input value={vehicle.image} name="image" onChange={onChangeHandler} type="text" />
-
+                <div class="md:flex md:items-center mb-3">
+                    <div class="md:w-1/3">
+                        <label class="font-bold">Image URL</label>
+                    </div>
+                    <div class="w-2/3">
+                        <input class=" border rounded w-full py-2 px-2" value={vehicle.image} name="image" onChange={onChangeHandler} type="text" />
+                    </div>
                     {
                         errors.image ?
                             <span>{errors.image.message}</span>
@@ -77,10 +94,13 @@ const VehicleForm = (props) => {
                     }
                 </div>
 
-                <div>
-                    <label>Current City</label>
-                    <input value={vehicle.currentCity} name="currentCity" onChange={onChangeHandler} type="text" />
-
+                <div class="md:flex md:items-center mb-3">
+                    <div class="md:w-1/3">
+                        <label class="font-bold">Current City</label>
+                    </div>
+                    <div class="w-2/3">
+                        <input class=" border rounded w-full py-2 px-2" value={vehicle.currentCity} name="currentCity" onChange={onChangeHandler} type="text" />
+                    </div>
                     {
                         errors.currentCity ?
                             <span>{errors.currentCity.message}</span>
@@ -88,18 +108,22 @@ const VehicleForm = (props) => {
                     }
                 </div>
 
-                <div>
-                    <label>Current State</label>
-                    <select value={vehicle.currentState} onChange={onChangeHandler} name="currentState">
-                        <option value="none" defaultValue hidden>State</option>
-                        <option value="AK">AK</option>
-                        <option value="MA">MA</option>
-                        <option value="WA">WA</option>
-                        <option value="OR">OR</option>
-                        <option value="FL">FL</option>
-                        <option value="CA">CA</option>
-                        <option value="MN">MN</option>
-                    </select>
+                <div class="md:flex md:items-center mb-3">
+                    <div class="md:w-1/3">
+                        <label class="font-bold">Current State</label>
+                    </div>
+                    <div class="w-2/3">
+                        <select class=" border rounded w-full py-2 px-2" value={vehicle.currentState} onChange={onChangeHandler} name="currentState">
+                            <option value="none" defaultValue hidden>State</option>
+                            <option value="AK">AK</option>
+                            <option value="MA">MA</option>
+                            <option value="WA">WA</option>
+                            <option value="OR">OR</option>
+                            <option value="FL">FL</option>
+                            <option value="CA">CA</option>
+                            <option value="MN">MN</option>
+                        </select>
+                    </div>
                     {
                         errors.currentState ?
                             <span>{errors.currentState.message}</span>
@@ -108,7 +132,7 @@ const VehicleForm = (props) => {
 
                 </div>
 
-                <button>{buttonText}</button>
+                <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 mt-4 mr-2 border border-blue-500 hover:border-transparent rounded">{buttonText}</button>
 
 
             </form>

@@ -7,7 +7,7 @@ import Header from './Header';
 
 const UpdateVehicle = (props)=>{
 
-    const {id} = props;
+    const {id, user, setUser} = props;
 
     const [editedVehicle, setEditedVehicle] = useState({
         make: "",
@@ -59,6 +59,7 @@ const editSubmitHandler = (e)=>{
                 link={"/home"}
                 linkText={"Return Home"}
                 titleText={"Edit a Vehicle!"}
+                setUser = {setUser} user = {user}
             />
 
             <VehicleForm 
