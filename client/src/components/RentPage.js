@@ -96,60 +96,84 @@ const RentPage = (props) =>{
 
     return(
         <div style={{textAlign:"center"}}>
-            <div>
-                <Header link={"/home"} linkText={"Home"} titleText={"Rent My Ride"}  loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user} />
-
-                <img src={vehicle.image} alt="vehicle image" class = "w30 h-30"/>
-                <p>{vehicle.make} {vehicle.model}</p>
-                <p>Rental rate: ${vehicle.rate}</p>
-                <p>Data provided by USDE.</p>
-                <p>MPG City: {vehicleSpecs.city08} </p>
-                <p>MPG Highway: {vehicleSpecs.highway08} </p>
-                <p>Transmission: {vehicleSpecs.trany} </p>
-                <p>Fuel Type: {vehicleSpecs.fuelType} </p>
-                <p>Drive Train: {vehicleSpecs.drive} </p>
-                
+            <Header link={"/home"} linkText={"Home"} titleText={"Rent My Ride"}  loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user} />
+            <div class="flex-column mx-auto m-10 w-2/3 bg-blue-50 shadow-md rounded">
+                <div class="flex items-center">
+                    <div class="w-1/2">
+                        <img src={vehicle.image} alt="vehicle image" class="object-cover w-full p-2" />
+                    </div>
+                    <div class="flex-column p-10 justify-start w-1/2">
+                        <p class="font-bold text-2xl mb-3" >{vehicle.make} {vehicle.model}</p>
+                        <div class="flex justify-between">
+                            <p>Rental rate:</p>
+                            <p>${vehicle.rate}</p>
+                        </div>
+                        <div class="flex justify-between">
+                            <p>Location:</p>
+                            <p>{vehicle.currentCity}, {vehicle.currentState}</p>
+                        </div>
+                            <p class="text-xs italic mb-2 mt-6">Data below provided by USDE. May not be available for all makes.</p>
+                        <div class="flex justify-between">
+                            <p>MPG City:</p>
+                            <p>{vehicleSpecs.city08}</p>
+                        </div>
+                        <div class="flex justify-between">
+                            <p>MPG Highway:</p>
+                            <p>{vehicleSpecs.highway08}</p>
+                        </div>
+                        <div class="flex justify-between">
+                            <p>Transmission:</p>
+                            <p>{vehicleSpecs.trany}</p>
+                        </div>
+                        <div class="flex justify-between">
+                            <p>Fuel Type:</p>
+                            <p>{vehicleSpecs.fuelType}</p>
+                        </div>
+                        <div class="flex justify-between">
+                            <p>Drive Train:</p>
+                            <p>{vehicleSpecs.drive}</p>
+                        </div>
+                    </div>
+                </div>
+                <div >
+                    <form onSubmit={bookVehicle}>
+                        <div class="ml-6 flex items-center justify-self-center">
+                            <div class="flex items-center mb-3 w-1/2 ">
+                                <div class="w-1/4">
+                                    <label class="font-bold">Rent start</label>
+                                </div>
+                                <div class="w-full">
+                                    <input class="border rounded w-1/2 py-2 px-2" type="date" name="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-3 w-1/2">
+                                <div class="w-1/4">
+                                    <label class="font-bold">Rent end</label>
+                                </div>
+                                <div class="w-full">
+                                    <input class="border rounded w-1/2 py-2 px-2" type="date" name="endDate" value={endDate} onChange={(e) => endDateHandler(e)} />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-4">
+                            {
+                                submitted && loggedIn ? 
+                                    <p>{vehicle.model} has been booked! Booking confirmation: {order._id}</p>
+                                :
+                                    <p>Total cost for {rentalDuration} for ${totalCost}.</p>
+                            }
+                            {
+                                !loggedIn?
+                                    <p>Please log in again as session has expired!</p>
+                                : null
+                            }
+                        </div>
+                        <div className="center">
+                            <button class="mb-8 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 mt-4 mr-2 border border-blue-500 hover:border-transparent rounded" onClick={()=>navigate(`/vehicle/rent/${id}`)}>Book</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div>
-                <form onSubmit={bookVehicle}>
-                    <div>
-                        <label>Rent start</label>
-                        {/* {errors.startDate? (
-                            <span className="error-text">
-                                {errors.startDate.message}
-                            </span>
-                        ) : null} */}
-                        <input type="date" name="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                    </div>
-
-                    <div>
-                        <label>Rent end</label>
-                        {/* {errors.endDate ? (
-                            <span className="error-text">
-                                {errors.endDate.message}
-                            </span>
-                        ) : null} */}
-                        <input type="date" name="endDate" value={endDate} onChange={(e) => endDateHandler(e)} />
-                    </div>
-                    {
-                        submitted && loggedIn ? 
-                            <p>{vehicle.model} has been booked! Booking confirmation: {order._id}</p>
-                        :
-                            <p>Total cost for {rentalDuration} for ${totalCost}.</p>
-                    }
-                    {
-                        !loggedIn?
-                            <p>Please log in again as session has expired!</p>
-                        : null
-                    }
-
-                    <div className="center">
-                        <button>Book</button>
-                    </div>
-                </form>
-            </div>
-            
         </div>
     )
 }

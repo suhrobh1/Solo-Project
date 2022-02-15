@@ -30,6 +30,8 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minLength: [8, "Password MUST be at least 8 characters"]
     },
+
+    
 }, {timestamps: true})
 
 UserSchema.virtual("confirmPassword")//setting a virtual field for confirm field

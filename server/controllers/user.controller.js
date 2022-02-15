@@ -20,6 +20,7 @@ module.exports = {
             })
     },
 
+
     login: (req, res) => {
         User.findOne({email: req.body.email}) //searching the DB by email to see if it exists (re.body is what we get sent from fromnt end for querry)
             .then((userRecord) =>{

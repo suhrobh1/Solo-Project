@@ -52,7 +52,15 @@ const VehicleSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User" //Same collection name that is in user.model
-    }
+    },
+
+    messages: [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Message"
+        }
+  
+      ]
 
 
 }, {timestamps: true})

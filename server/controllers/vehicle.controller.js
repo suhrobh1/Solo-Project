@@ -7,6 +7,7 @@ module.exports = {
     findAllVehicles: (req, res) =>{
         Vehicle.find()
             .populate("createdBy", "username email")
+            .populate("messages", "content _id")
             .then((allVehicles)=>{
                 console.log(allVehicles);
                 res.json(allVehicles);
@@ -32,7 +33,8 @@ module.exports = {
             })
     },
     findOneVehicle: (req, res)=>{
-        Vehicle.findOne({_id: req.params.id}) 
+        Vehicle.findOne({_id: req.params.id})
+            .populate("messages", "content likes author")
             .then((oneVehicle)=>{
                 console.log(oneVehicle);
                 res.json(oneVehicle)
