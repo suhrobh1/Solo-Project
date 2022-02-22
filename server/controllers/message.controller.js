@@ -18,19 +18,19 @@ module.exports = {
     createNewMessage: (req, res)=>{
         Message.create(req.body)
             .then((messagePosted)=>{
-              console.log(messagePosted);
+              console.log("What is message posted?======",messagePosted);
               console.log("req.body.associatedVehicle", req.body.associatedVehicle);
-              
+            //   console.log(Vehicle.findOne(req.body.associatedVehicle));
               Vehicle.findOneAndUpdate(req.body.associatedVehicle, 
                 {
-                    $addToSet: {messages: messagePosted._id}
+                    $push: {messages: messagePosted._id}
                 },{
                     new: true,
                     useFindAndModify: true
                 })           
                 .populate("messages", "content author _id ")
                 .then((vehicleToUpdate) =>{
-                  console.log(vehicleToUpdate)
+                  console.log("Which vehicle is this?===========", vehicleToUpdate)
                   res.json(messagePosted)
                 })
                 .catch((err) =>{

@@ -7,5 +7,5 @@ module.exports = (app) => {
     app.put("/api/messages/:id", MessageController.likeMessage);
     //     app.get("/api/messages/:id", MessageController.findOneMessage); 
     //     app.get("/api/messagesByUser/:username", authenticate, MessageController.findAllMessagesByUser);
-        app.delete("/api/messages/:id", MessageController.deleteMessage);
+    app.delete("/api/messages/:id", MessageController.deleteMessage);
 }

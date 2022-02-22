@@ -32,7 +32,20 @@ const RentPage = (props) =>{
                 console.log(err)
             })
     }, [])
-    console.log("TESTING:", vehicle.model);
+    
+    useEffect(() => {// setting user state for login validation
+        axios.get("http://localhost:8000/api/users/secure",
+            { withCredentials: true }
+        )
+            .then((res) => {
+                console.log("User data from db------------",res.data);
+                setUser(res.data);
+                setLoggedIn(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
 
     useEffect(() => {
         axios.get(`https://www.fueleconomy.gov/ws/rest/ympg/shared/vehicles?make=Nissan&model=Altima`)
@@ -96,7 +109,7 @@ const RentPage = (props) =>{
 
     return(
         <div style={{textAlign:"center"}}>
-            <Header link={"/home"} linkText={"Home"} titleText={"Rent My Ride"}  loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user} />
+            <Header link={"/"} linkText={"Home"} titleText={"Rent My Car"}  loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user} />
             <div class="flex-column mx-auto m-10 w-2/3 bg-blue-50 shadow-md rounded">
                 <div class="flex items-center">
                     <div class="w-1/2">

@@ -7,7 +7,7 @@ import Header from './Header';
 
 const UpdateVehicle = (props)=>{
 
-    const {id, user, setUser} = props;
+    const {id, user, setUser, setLoggedIn, loggedIn} = props;
 
     const [editedVehicle, setEditedVehicle] = useState({
         make: "",
@@ -33,6 +33,19 @@ const UpdateVehicle = (props)=>{
             });
     }, [])
 
+    useEffect(() => {// setting user state for login validation
+        axios.get("http://localhost:8000/api/users/secure",
+            { withCredentials: true }
+        )
+            .then((res) => {
+                console.log("User data from db------------",res.data);
+                setUser(res.data);
+                setLoggedIn(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
 const editSubmitHandler = (e)=>{
     e.preventDefault();
 
@@ -40,7 +53,7 @@ const editSubmitHandler = (e)=>{
         .then((res)=>{
             console.log(res);
             console.log(res.data);
-            navigate("/home");
+            navigate("/");
         })
         .catch((err)=>{
             console.log(err);
@@ -56,7 +69,7 @@ const editSubmitHandler = (e)=>{
         <div>
 
             <Header
-                link={"/home"}
+                link={"/"}
                 linkText={"Return Home"}
                 titleText={"Edit a Vehicle!"}
                 setUser = {setUser} user = {user}

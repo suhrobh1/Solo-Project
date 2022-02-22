@@ -3,6 +3,8 @@ import axios from 'axios';
 import {Link} from '@reach/router';
 import Header from './Header';
 import  DeleteButton  from './DeleteButton';
+import Footer from './Footer';
+import { Testimonials } from './Testimonials';
 
 const DisplayAllVehicles = (props) =>{
 
@@ -29,6 +31,7 @@ const DisplayAllVehicles = (props) =>{
             .then((res) => {
                 console.log("User data from db------------",res.data);
                 setUser(res.data);
+                setLoggedIn(true)
             })
             .catch((err) => {
                 console.log(err);
@@ -40,19 +43,19 @@ const DisplayAllVehicles = (props) =>{
     }
 
     return(
-        <div >
+        <div  >
             <div>
                 <Header  link={"/new"} linkText={"Add Vehicle"} titleText={"Rent My Car"} loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user} />
             </div>    
                 <p class="text-xl m-10">Available For Rent</p>
-                <div class=" mx-8 mt-15 flex justify-around">
+                <div class=" mx-8 mt-15 flex flex-wrap mx-auto w-2/3 justify-between bg-blue-50 shadow-md rounded ">
                     {
                         vehicleList.map((vehicle, index)=>(
                             
-                            <div class="flex-column w-60 border-2 border-grey-200 rounded p-2 hover:shadow-xl" key={index}>
+                            <div class="flex-column m-5 w-60 border-2 border-grey-200 rounded p-2 hover:shadow-xl" key={index}>
                                 
                                 <Link to={`/vehicle/${vehicle._id}`}>
-                                    <p>{vehicle.make} {vehicle.model}</p>
+                                    <p >{vehicle.make} {vehicle.model}</p>
                                     <img src={vehicle.image} alt="Vehicle picture" class ="object-cover w-full" />
                                 </Link>
                                 { 
@@ -82,6 +85,8 @@ const DisplayAllVehicles = (props) =>{
                         ))
                     }
                 </div>
+                <Testimonials/>
+                <Footer/>
         </div>
     )
 }

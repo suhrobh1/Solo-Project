@@ -9,14 +9,14 @@ module.exports = {
         user.save()   // this is refrencing the pre save middleware in model file
             .then((newUser)=> {
                 console.log("Successfully registered", newUser);
-                res.json({
+                return res.json({
                     successMessage: "Thank you for registering!",
                     user: newUser
                 })
             })
             .catch((err) =>{
                 console.log("Registration is not successful", err)
-                res.status(400)
+             return res.status(400).json(err)
             })
     },
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link, navigate} from '@reach/router';
 import axios from 'axios';
 import VehicleForm from './VehicleForm';
@@ -38,6 +38,19 @@ const AddNewVehicle = (props) =>{
         })
     }
 
+    useEffect(() => {// setting user state for login validation
+        axios.get("http://localhost:8000/api/users/secure",
+            { withCredentials: true }
+        )
+            .then((res) => {
+                console.log("User data from db------------",res.data);
+                setUser(res.data);
+                setLoggedIn(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
     return(
         <div>
             <Header

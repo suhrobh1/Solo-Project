@@ -15,21 +15,25 @@ const DisplayOneVehicle = (props) =>{
     const [messageList, setMessageList] = useState([]);
     const [content, setContent] = useState("");
 
+    // useEffect also populate your comments
     useEffect(()=>{
-      
+        console.log('grabbing the car id', id)
         axios.get(`http://localhost:8000/api/vehicles/${id}`)
             .then((res)=>{
-                console.log(res);
-                console.log("CHECK CONTENT HERE", res.data);
+                // console.log(res);
+                console.log("this is my car", res.data);
+
                 setVehicle(res.data);
-                setMessageList(res.data.messages);
+                // useEffect also populate your comments in messageList
+                // setMessageList(res.data.messages);
                 
             })
             .catch((err)=>{
                 console.log(err)
             })
-    }, [])
-    
+    }, [id])
+    console.log('MY VEHICLE')
+    console.log(vehicle)
     
     useEffect(() => {//API stuff
         axios.get(`https://www.fueleconomy.gov/ws/rest/ympg/shared/vehicles?make=${vehicle.make}&model=${vehicle.model}`)
@@ -41,17 +45,37 @@ const DisplayOneVehicle = (props) =>{
             .catch((err)=>{
                 console.log(err)
             })
+        axios.get(`http://localhost:8000/api/messages`)
+            .then((res) => {
+                console.log(" axios call to get all messages", res.data);
+                
+                setMessageList(res.data.filter((message, index) => id === message.associatedVehicle));
+            })
+            .catch((err)=> {
+                console.log(err);
+            })
         }, [vehicle])
+
+        useEffect(() => {// setting user state for login validation
+            axios.get("http://localhost:8000/api/users/secure",
+                { withCredentials: true }
+            )
+                .then((res) => {
+                    console.log("User data from db------------",res.data);
+                    setUser(res.data);
+                    setLoggedIn(true);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }, [])
     
-
-
-
     const deleteVehicle = () =>{
         axios.delete(`http://localhost:8000/api/vehicles/${id}`)
             .then((res)=>{
                 console.log(res);
                 console.log(res.data);
-                navigate("/home");
+                navigate("/");
             })
             .catch((err)=>{
                 console.log(err)
@@ -69,14 +93,12 @@ const DisplayOneVehicle = (props) =>{
         console.log("user info:_____", user.username)
         axios.post(`http://localhost:8000/api/messages`, {content, associatedVehicle:id, author:user.username })
             .then((res) => {
-                console.log("____RES.DATA________", res.data);
-                
-                setMessageList([...messageList, res.data]);
+               setMessageList([...messageList, res.data]);
             })
             .catch((err)=> {
                 console.log(err);
             })
-        setContent("");
+            setContent("");
     }
 
     const likeMessage = (messageFromBelow)=>{
@@ -86,7 +108,7 @@ const DisplayOneVehicle = (props) =>{
         }
         )
         .then((res)=>{
-            console.log(res.data);
+            // console.log(res.data);
 
             let updatedMessageList = messageList.map((message, index)=>{
                 
@@ -102,10 +124,12 @@ const DisplayOneVehicle = (props) =>{
         })
     }
 
+   // console.log("=======================")
+    // console.log(messageList)
 
     return(
         <div>
-           <Header link={"/new"} linkText={"Add a new vehicle"} titleText={"Rent My Ride"} loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user}/>
+           <Header link={"/new"} linkText={"Add a new vehicle"} titleText={"Rent My Car"} loggedIn = {loggedIn} setLoggedIn = {setLoggedIn} setUser = {setUser} user = {user}/>
             <div class="flex-column mx-auto m-10 w-2/3 bg-blue-50 shadow-md rounded">
                 <div class="flex items-center">
                     <div class="w-1/2">
@@ -171,6 +195,7 @@ const DisplayOneVehicle = (props) =>{
                                         </div>
                                     </div>
                                 </div>
+                                
                             ))
                         : null
                     }
